@@ -248,17 +248,17 @@ class ELEGANT(object):
 
     def save_scalar_log(self):
         scalar_info = {
-            'loss_D': self.loss_D.data.cpu().numpy()[0],
-            'loss_G': self.loss_G.data.cpu().numpy()[0],
+            'loss_D': self.loss_D.data.cpu().detach().numpy(),
+            'loss_G': self.loss_G.data.cpu().detach().numpy(),
             'G_lr'  : self.G_lr_scheduler.get_lr()[0],
             'D_lr'  : self.D_lr_scheduler.get_lr()[0],
         }
 
         for key, value in self.G_loss.items():
-            scalar_info['G_loss/' + key] = value.data[0]
+            scalar_info['G_loss/' + key] = value.data.item()
 
         for key, value in self.D_loss.items():
-            scalar_info['D_loss/' + key] = value.data[0]
+            scalar_info['D_loss/' + key] = value.data.item()
 
         for tag, value in scalar_info.items():
             self.writer.add_scalar(tag, value, self.step)
@@ -272,8 +272,8 @@ class ELEGANT(object):
 
     def train(self):
         for self.step in range(self.start_step, 1 + self.config.max_iter):
-            self.G_lr_scheduler.step()
-            self.D_lr_scheduler.step()
+            # self.G_lr_scheduler.step()
+            # self.D_lr_scheduler.step()
 
             for self.attribute_id in range(self.n_attributes):
                 A, y_A = next(self.dataset.gen(self.attribute_id, True))
@@ -302,6 +302,7 @@ class ELEGANT(object):
                 if self.step % 2000 == 0:
                     self.save_sample_images()
 
+
             print('step: %06d, loss D: %.6f, loss G: %.6f' % (self.step, self.loss_D.data.cpu().numpy(), self.loss_G.data.cpu().numpy()))
 
             if self.step % 100 == 0:
@@ -309,6 +310,9 @@ class ELEGANT(object):
 
             if self.step % 2000 == 0:
                 self.save_model()
+
+            self.G_lr_scheduler.step()
+            self.D_lr_scheduler.step()
 
         print('Finished Training!')
         self.writer.close()

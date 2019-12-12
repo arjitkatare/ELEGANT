@@ -142,6 +142,7 @@ def main(data_dir, out_dir, thread_num):
 
     with open(os.path.join(data_dir, 'list_landmarks_celeba.txt'), 'r') as f:
         landmarks = [list(map(int, x.split()[1:11])) for x in f.read().strip().split('\n')[2:]]
+        #print(landmarks)
 
     im_list = glob.glob(os.path.join(data_dir, 'data/*.jpg'))
 
@@ -154,5 +155,5 @@ def main(data_dir, out_dir, thread_num):
 
 
 if __name__ == '__main__':
-    os.environ["CUDA_VISIBLE_DEVICES"] = ''
+    #os.environ["CUDA_VISIBLE_DEVICES"] = ''
     main('./datasets/celebA/', './datasets/celebA/align_5p/', 30)

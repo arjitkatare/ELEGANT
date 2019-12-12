@@ -61,15 +61,15 @@ class Encoder(nn.Module):
         # init weight
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
-                nn.init.normal(m.weight, 0, 0.02)
+                nn.init.normal_(m.weight, 0, 0.02)
             elif isinstance(m, nn.ConvTranspose2d):
-                nn.init.normal(m.weight, 0, 0.02)
+                nn.init.normal_(m.weight, 0, 0.02)
             elif isinstance(m, nn.BatchNorm2d):
-                nn.init.normal(m.weight, 1, 0.02)
-                nn.init.constant(m.bias, 0)
+                nn.init.normal_(m.weight, 1, 0.02)
+                nn.init.constant_(m.bias, 0)
             elif isinstance(m, nn.Linear):
-                nn.init.normal(m.weight, 0, 0.02)
-                nn.init.constant(m.bias, 0)
+                nn.init.normal_(m.weight, 0, 0.02)
+                nn.init.constant_(m.bias, 0)
 
     def forward(self, x, return_skip=True):
         skip = []
@@ -116,15 +116,15 @@ class Decoder(nn.Module):
         # init weight
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
-                nn.init.normal(m.weight, 0, 0.02)
+                nn.init.normal_(m.weight, 0, 0.02)
             elif isinstance(m, nn.ConvTranspose2d):
-                nn.init.normal(m.weight, 0, 0.02)
+                nn.init.normal_(m.weight, 0, 0.02)
             elif isinstance(m, nn.BatchNorm2d):
-                nn.init.normal(m.weight, 1, 0.02)
-                nn.init.constant(m.bias, 0)
+                nn.init.normal_(m.weight, 1, 0.02)
+                nn.init.constant_(m.bias, 0)
             elif isinstance(m, nn.Linear):
-                nn.init.normal(m.weight, 0, 0.02)
-                nn.init.constant(m.bias, 0)
+                nn.init.normal_(m.weight, 0, 0.02)
+                nn.init.constant_(m.bias, 0)
 
     def forward(self, enc1, enc2, skip=None):
         x = torch.cat([enc1, enc2], 1)
@@ -166,15 +166,15 @@ class Discriminator(nn.Module):
         # init weight
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
-                nn.init.normal(m.weight, 0, 0.02)
+                nn.init.normal_(m.weight, 0, 0.02)
             elif isinstance(m, nn.ConvTranspose2d):
-                nn.init.normal(m.weight, 0, 0.02)
+                nn.init.normal_(m.weight, 0, 0.02)
             elif isinstance(m, nn.BatchNorm2d):
-                nn.init.normal(m.weight, 1, 0.02)
-                nn.init.constant(m.bias, 0)
+                nn.init.normal_(m.weight, 1, 0.02)
+                nn.init.constant_(m.bias, 0)
             elif isinstance(m, nn.Linear):
-                nn.init.normal(m.weight, 0, 0.02)
-                nn.init.constant(m.bias, 0)
+                nn.init.normal_(m.weight, 0, 0.02)
+                nn.init.constant_(m.bias, 0)
 
     def forward(self, image, label):
         '''
