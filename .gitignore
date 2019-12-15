@@ -107,3 +107,4 @@ log/
 img/
 *.jpg
 *.png
+.vscode
